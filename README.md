@@ -22,7 +22,7 @@ https://docs.google.com/document/d/1ndavCCUKBWmEi2BoIczrs38Iwepr5g7VvlHKB_dlork/
 
 # Link to the related files 
 
-https://github.com/Ericanshimir/MindCare/tree/main/MindCare/media
+https://github.com/Ericanshimir/MindCare/tree/main/MindCare/media/videos
 
 ### Steps to Run the App
 1. **Clone the Repository**
