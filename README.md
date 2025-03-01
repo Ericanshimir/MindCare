@@ -7,14 +7,6 @@
 
 ## Overview
 MindCare is a comprehensive mental health platform designed to support users in managing their well-being. It offers educational resources, access to professional support, and self-assessment quizzes. The platform enables users to take quizzes to evaluate their mental health, schedule appointments with mental health professionals, and explore curated content related to mental wellness. MindCare aims to provide a safe and accessible space for individuals to gain insights into their mental health and seek guidance when needed.
-
-## Features
-- **Personalized Mental Health Dashboard** – Users can track their mental well-being, set personal goals, and access relevant resources.
-- **Book Appointment** – Schedule sessions with licensed mental health professionals for personalized support.
-- **Mental Health Quizzes** – Quizzes about mental health organize in each category
-- **Mental health support space** – Join a safe and moderated community where users can share experiences, seek advice, and provide support to others.
-- **Contact** – Provides crisis intervention information and direct contact with professional helplines.
-- **Mental Health Ressource Center** – Provides curated content to promote well-being and positive mental habits.
   
 # Screenshots of the app interface can be found this the **designs folder** of this repository
 
@@ -61,20 +53,6 @@ https://github.com/Ericanshimir/MindCare/tree/main/MindCare/media
    ```
 7. **Access the Application**
    Open your browser and navigate to: `http://127.0.0.1:8000/`
-
-8.  # Navigation & UI Details
-
-**Home Page**: Overview of the platform.
-
-**Dashboard**: Personalized user experience and tracking.
-
-**Quizzes Page**: Take self-assessment quizzes.
-
-**Appointment Booking**: Schedule a session with a professional.
-
-**Training Materials**: Access training materials.
-
-**Community Forum**: This is where the users and professional they will interact.
 
 
 ## Contribution
