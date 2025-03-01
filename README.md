@@ -1,4 +1,4 @@
-### Steps to Run the App
+# Steps to Run the App
 1. **Clone the Repository**
    ```sh
    git clone https://github.com/Ericanshimir/MindCare.git
