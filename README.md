@@ -28,6 +28,10 @@ https://youtu.be/sGepfbtpCOo
 
 https://docs.google.com/document/d/1ndavCCUKBWmEi2BoIczrs38Iwepr5g7VvlHKB_dlork/edit?tab=t.0
 
+# Link to the related files 
+
+https://github.com/Ericanshimir/MindCare/tree/main/MindCare/media
+
 ### Steps to Run the App
 1. **Clone the Repository**
    ```sh
