@@ -774,54 +774,42 @@ def fetch_updates(request):
 
 def login_view(request):
     if request.method == 'POST':
-        # Check if this is an AJAX request to validate the role
-        if 'role_check' in request.POST and request.POST['role_check'] == 'true':
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(request, username=username, password=password)
-            
-            if user:
-                # Determine the user's role
-                user_role = 'professional' if hasattr(user, 'professional_profile') else 'user'
-                return JsonResponse({
-                    'status': 'success',
-                    'user_role': user_role
-                })
-            else:
-                return JsonResponse({
-                    'status': 'invalid_credentials',
-                    'message': 'Invalid username or password'
-                })
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        role = request.POST.get('role')
         
-        # Normal login flow
-        username = request.POST['username']
-        password = request.POST['password']
-        role = request.POST['role']
+        # First authenticate the user
         user = authenticate(request, username=username, password=password)
-
-        if user:
-            # Determine the user's actual role
-            is_professional = hasattr(user, 'professional_profile')
-            
-            # Validate that the user is trying to log in with their correct role
-            if (role == 'professional' and not is_professional) or (role == 'user' and is_professional):
-                messages.error(request, f"You cannot log in as {role}. Your registered role is {'professional' if is_professional else 'user'}.")
-                return redirect('login')
-            
-            # Proceed with normal login
+        
+        if user is not None:
+            # User credentials are valid - proceed with login regardless of role
             login(request, user)
-
+            
+            # Redirect based on the selected role, not based on what's in the database
             if role == 'professional':
-                if is_professional:  # Check if the user has a Professional profile
-                    return redirect(reverse('professional_dashboard'))
-                else:
-                    messages.error(request, 'No professional profile found. Contact support.')
-                    return redirect('login')
-
-            return redirect(reverse('dashboard'))  # Redirect regular users
+                # Check if professional record exists, create one if it doesn't
+                professional, created = Professional.objects.get_or_create(
+                    user=user,
+                    defaults={
+                        'name': user.get_full_name() or user.username,
+                        'specialty': 'General',
+                        'contact_email': user.email or f"{username}@example.com",
+                        'phone_number': '0000000000'
+                    }
+                )
+                
+                if created:
+                    print(f"Created new professional profile for {username} on login")
+                
+                return redirect('professional_dashboard')
+            else:
+                # Regular user dashboard
+                return redirect('dashboard')
         else:
+            # Invalid credentials
             messages.error(request, 'Invalid username or password.')
     
+    # For GET requests, just render the login template
     return render(request, 'login.html')
 
 from django.contrib.auth.decorators import login_required

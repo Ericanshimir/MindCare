@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | MindCare</title>
 
-    <!-- ✅ Google Fonts for Better Typography -->
+    <!-- Google Fonts for Better Typography -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-    <!-- ✅ FontAwesome for Icons -->
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* ✅ Global Styles */
+        /* Global Styles */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -20,7 +20,7 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* ✅ Background */
+        /* Background */
         body {
             display: flex;
             justify-content: center;
@@ -29,7 +29,7 @@
             background: #1f4870;
         }
 
-        /* ✅ Container */
+        /* Container */
         .container {
             background: white;
             padding: 30px;
@@ -43,14 +43,14 @@
             transform: scale(1.02);
         }
 
-        /* ✅ Heading */
+        /* Heading */
         h1 {
             color: #333;
             font-weight: 600;
             margin-bottom: 15px;
         }
 
-        /* ✅ Labels */
+        /* Labels */
         p {
             font-weight: 600;
             color: #444;
@@ -58,7 +58,7 @@
             text-align: left;
         }
 
-        /* ✅ Input Fields */
+        /* Input Fields */
         input, select {
             width: 100%;
             padding: 12px;
@@ -75,7 +75,7 @@
             box-shadow: 0 0 5px #1f4870;
         }
 
-        /* ✅ Login Button */
+        /* Login Button */
         input[type="submit"], button[type="submit"] {
             background: #1f4870;
             color: white;
@@ -94,7 +94,7 @@
             transform: scale(1.05);
         }
 
-        /* ✅ Sign-Up Link */
+        /* Sign-Up Link */
         .signup-container {
             margin-top: 10px;
         }
@@ -111,7 +111,7 @@
             text-decoration: underline;
         }
 
-        /* ✅ Error Message */
+        /* Error Message */
         .error-message {
             color: #e74c3c;
             margin-bottom: 15px;
@@ -139,7 +139,7 @@
             margin-bottom: 10px;
         }
 
-        /* ✅ Responsive Design */
+        /* Responsive Design */
         @media (max-width: 450px) {
             .container {
                 width: 90%;
@@ -164,7 +164,7 @@
 
         <div id="error-message" class="error-message">
             <i class="fas fa-exclamation-circle"></i> 
-            <span id="error-text">You cannot login with this role. Please select the role that matches your registration.</span>
+            <span id="error-text"></span>
         </div>
 
         <form id="loginForm" action="{% url 'login' %}" method="POST">
@@ -192,72 +192,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Simplified login - just submit the form directly
+            // No pre-validation of role that can cause issues
             const loginForm = document.getElementById('loginForm');
             const errorMessage = document.getElementById('error-message');
             const errorText = document.getElementById('error-text');
             
-            loginForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                const selectedRole = document.getElementById('role').value;
-                
-                // Create form data to send
-                const formData = new FormData();
-                formData.append('username', username);
-                formData.append('password', password);
-                formData.append('role_check', 'true');
-                
-                // Get the CSRF token from the form
-                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                
-                try {
-                    // Send a request to validate the role
-                    const response = await fetch(loginForm.action, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': csrfToken
-                        },
-                        body: formData
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (data.status === 'success') {
-                        // User exists, now check if the role matches
-                        if (data.user_role === selectedRole) {
-                            // Roles match, proceed with actual login
-                            submitLoginForm();
-                        } else {
-                            // Roles don't match, show error
-                            errorText.textContent = `You cannot log in as ${selectedRole}. Your registered role is ${data.user_role}.`;
-                            errorMessage.style.display = 'block';
-                            setTimeout(() => {
-                                errorMessage.style.display = 'none';
-                            }, 5000); // Hide after 5 seconds
-                        }
-                    } else {
-                        // Invalid credentials or some other error, let the regular form handle this
-                        submitLoginForm();
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    // If there's an error with the fetch, fall back to normal form submission
-                    submitLoginForm();
-                }
-            });
-            
-            function submitLoginForm() {
-                // Remove the role_check field that was only for validation
-                const roleCheckInput = document.querySelector('input[name="role_check"]');
-                if (roleCheckInput) {
-                    roleCheckInput.remove();
-                }
-                
-                // Submit the form normally
-                loginForm.submit();
-            }
+            // We'll let Django handle the validation on the server side
+            // This removes the complexity of the AJAX validation
         });
     </script>
 </body>
