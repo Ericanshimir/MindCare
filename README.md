@@ -22,7 +22,7 @@ https://github.com/Ericanshimir/MindCare/tree/main/MindCare/designs
 
 # Link to the video showcasing MindCare App functionalities.
 
-https://youtu.be/sGepfbtpCOo
+https://youtu.be/YQETelcQRpM
 
 # Analysis of  the results and how I achieved or missed the objectives in the project proposal. 
 
